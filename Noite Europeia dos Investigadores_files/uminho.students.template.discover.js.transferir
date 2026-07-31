@@ -1,0 +1,821 @@
+﻿jQuery(document).ready(function ($) {
+    'use strict';
+
+    /*Global Variables
+	*******************************************/
+    /// Header / Navigation Variables------------------------------------
+    var $header = $('.header');
+    var $headerToolbar = $('.header-toolbar');
+    var $stickyHeader = $('.header.sticky');
+    var $scrollHeader = $('.header.scroller');
+    var $transpHeader = $('.header.transparent');
+    var $cartBtn = $('.header .cart-btn');
+    var $menuItem = $('.menu ul li');
+    var $naviToggle = $('#nav-toggle');
+    var $exitOffCanv = $('.exit-off-canvas');
+    var $megaSubmLink = $('.mega-menu .has-submenu a');
+    var $megaSubmenu = $('.mega-menu .mega-submenu');
+    var $megaMenu = $('.mega-menu');
+    var $mobButtonsToggle = $('.mobile-navi .buttons li > a');
+    var $cartPromo = $('.cart-dropdown .promo-code');
+    var $cartPromoInput = $('.promo-code input[type="text"]');
+    var $searchBtn = $('.header .search');
+    var $searchBtnNew = $('.search');
+    var $searchInputBox = $('.search-field');
+    var $searchBtnClose = $('.header .fa-times');
+
+
+    var $secondSubmenu = $('.dynamic.submenu:eq(1)');
+
+    /// Hero Units Variables--------------------------------------------
+    var $heroFs = $('.hero-static.fullscreen');
+    var $heroFsInner = $('.hero-static.fullscreen .inner');
+    var $heroParallax = $('.hero-parallax')
+    /// ----------------------------------------------------------------
+
+    /// Forms Variables-------------------------------------------------
+    var $contForm = $('.contact-form');
+    var $qcForm = $('.quick-contact');
+    var $scrollTopBtn = $('#scrollTop-btn');
+    var $qcfBtn = $('#qcf-btn');
+    var $qsForm = $('.header .quick-search');
+    var $qsFormNew = $('.quick-search');
+    var $contForm = $('.contact-form');
+    var $loginForm = $('.login-form');
+    var $signupForm = $('.signup-form');
+    var $accountSetForm = $('.account-settings');
+    var $mailAddressForm = $('form[name="mailing-address"]');
+    var $mailAddressForm = $('form[name="mailing-address"]');
+    var $billAddressForm = $('form[name="billing-address"]');
+    var $subscrWidgetForm = $('.sidebar .subscribe form');
+    var $subscrFooterForm = $('.footer .subscribe form');
+    var $commentForm = $('.comment-form');
+    var $bookingForm = $('form[name="booking-form"]');
+    var $eventRegistr = $('form[name="event-registration"]');
+    var $signInForm = $('form[name="signin-form"]');
+    var $checkoutForm = $('form[name="checkout"]');
+    var $updateSubscribe = $('form[name="update-subscribe-form"]');
+    /// ----------------------------------------------------------------
+
+    ///Interactive Widgets Variables------------------------------------
+    var $harmonic = $('.harmonic .item');
+    var $tooltip = $('.tooltipped');
+    var $percentChart = $('.percent-chart');
+    var $lightGallery = $('.lightGallery');
+    var $logoCarousel = $('.logo-carousel');
+    var $sidebarBtn = $('.sidebar-button');
+    var $shareBar = $('.share-modal .bar');
+    var $infoClose = $('.info-string .close');
+    var $bannerClose = $('.info-block .close');
+    /// ----------------------------------------------------------------
+
+    /// Shop Variables------------------------------------------
+    var $shareBtn = $('.item footer .tools .share-btn');
+    var $clearChecks = $('.clearChecks');
+    var $purchHistToggle = $('.shop-history .panel-heading a');
+    var $packageCarousel = $('.package-carousel');
+    var $scItemDelete = $('.shopping-cart .item .delete');
+    var $interactiveCard = $('.card-fields');
+    /// ----------------------------------------------------------------
+
+    /// User Account Variables------------------------------------------
+    var $editPass = $('.account-settings .pass-block .edit-btn');
+    var $closePass = $('.account-settings .pass-block .close');
+    /// ----------------------------------------------------------------
+
+
+    ///////////////////////////////////////////////////////////////////////
+    /////////////////////  Fullscreen Hero Image  /////////////////////////
+    //////////////////////////////////////////////////////////////////////
+
+    $(window).on('load', function () {
+        $heroFs.after('<div class="holder"></div>');
+        $heroFs.css('min-height', $(window).height());
+        $heroFsInner.css('min-height', $(window).height());
+        $('.holder').css('min-height', $(window).height());
+        if ($stickyHeader.length > 0) {
+            $('.holder').css('min-height', $(window).height() - $stickyHeader.height());
+        }
+
+    });
+
+
+    var styles = {
+        left: 231,
+        top: -37
+    };
+
+ 
+
+    //$(".dynamic-children.hover").hover(
+    //        function () {
+    //            $('.dynamic.submenu:eq(1)').css(styles);
+    //        },
+    //        function () {
+    //            $('.dynamic.submenu:eq(1)').css(styles);
+    //        }
+    //);
+    //$(document).on("mouseenter", ".ms-navedit-linkNode", function () {
+    //    $('.dynamic.submenu:eq(1)').css(styles);
+    //});
+
+    //$(document).on("mouseleave", ".ms-navedit-linkNode", function () {
+    //    $('.dynamic.submenu:eq(1)').css(styles);
+    //});
+
+
+
+    $(window).on('resize', function () {
+        $heroFs.css('min-height', $(window).height());
+        $heroFsInner.css('min-height', $(window).height());
+        $('.holder').css('min-height', $(window).height());
+        if ($stickyHeader.length > 0) {
+            $('.holder').css('min-height', $(window).height() - $stickyHeader.height());
+        }
+    });
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////  Header / Navigation  /////////////////////////////
+    //////////////////////////////////////////////////////////////////////
+
+    /*Sticky Header
+	*******************************************/
+    $(window).on('load', function () {
+        $stickyHeader.waypoint('sticky');
+        $scrollHeader.waypoint('sticky');
+    });
+
+    /*Transparent Header
+	*******************************************/
+    $(window).on('load', function () {
+        if ($transpHeader.length > 0) {
+            var $logoAlt = $transpHeader.find('.logo > img').data('logo-alt');
+            $transpHeader.find('.logo > img').attr('src', $logoAlt);
+        }
+    });
+
+    $(window).bind('scroll', function () {
+        if (!$("header").hasClass("private")) {
+            var $logoAlt = $transpHeader.find('.logo > img').attr("data-logo-alt");
+            var $logoDefault = $transpHeader.find('.logo > img').attr("data-logo-default");
+            if ($(window).scrollTop() > $('.header.transparent').height()) {
+                $transpHeader.addClass('opaque');
+                $transpHeader.find('.logo > img').attr('src', $logoDefault);
+            } else {
+                $transpHeader.removeClass('opaque');
+                $transpHeader.find('.logo > img').attr('src', $logoAlt);
+            }
+        } else {
+            if ($("#suiteBar").length >= 1) {
+                var $logoAlt = $transpHeader.find('.logo > img').attr("data-logo-alt");
+                var $logoDefault = $transpHeader.find('.logo > img').attr("data-logo-default");
+                if ($(window).scrollTop() > 120) {
+                    $transpHeader.addClass('opaque');
+                    $transpHeader.find('.logo > img').attr('src', $logoDefault);
+                } else {
+                    $transpHeader.removeClass('opaque');
+                    $transpHeader.find('.logo > img').attr('src', $logoAlt);
+                }
+            }
+        }
+    });
+
+    $("#s4-workspace").bind('scroll', function () {
+
+        if (!$("header").hasClass("private")) {
+            var $logoAlt = $transpHeader.find('.logo > img').attr("data-logo-alt");
+            var $logoDefault = $transpHeader.find('.logo > img').attr("data-logo-default");
+            if ($("#s4-workspace").scrollTop() > 0) {
+                $transpHeader.addClass('opaque');
+
+                $transpHeader.find('.logo > img').attr('src', $logoDefault);
+            } else {
+                $transpHeader.removeClass('opaque');
+                $transpHeader.find('.logo > img').attr('src', $logoAlt);
+            }
+        } else {
+            if ($("#suiteBar").length >= 1) {
+                var $logoAlt = $transpHeader.find('.logo > img').attr("data-logo-alt");
+                var $logoDefault = $transpHeader.find('.logo > img').attr("data-logo-default");
+                if ($("#s4-workspace").scrollTop() > 120) {
+                    $transpHeader.addClass('opaque');
+                    $transpHeader.find('.logo > img').attr('src', $logoDefault);
+                } else {
+                    $transpHeader.removeClass('opaque');
+                    $transpHeader.find('.logo > img').attr('src', $logoAlt);
+                }
+            }
+        }
+    });
+
+
+
+    /*Shopping Cart Button Animation
+	*******************************************/
+    if ($cartBtn.length > 0) {
+        $cartBtn.spriteOnHover({ fps: 40, orientation: 'horizontal' });
+    }
+
+    /*Navi Toggle Animation
+	*******************************************/
+    $naviToggle.click(function () {
+        $(this).toggleClass('active');
+        $header.find('.inner').toggleClass('no-shadow');
+    });
+    $exitOffCanv.click(function () {
+        $naviToggle.removeClass('active');
+        $header.find('.inner').removeClass('no-shadow');
+    });
+
+    /*Foundation Off-Canvas / Intercharge (for responsive images)
+	***************************************************************************************/
+    $(document).foundation({
+        offcanvas: {
+            open_method: 'move', // Sets method in which offcanvas opens, can also be 'overlap'
+            close_on_click: true
+        }
+    });
+
+    /*Mobile Navigation
+	*******************************************/
+    //Breakpoints
+    $.breakpoint({
+        condition: function () {
+            return window.matchMedia('only screen and (max-width:1024px)').matches;
+        },
+        exit: function () {
+            $(window).scrollTop(50); //Topper Issue fix on resize
+            $exitOffCanv.trigger('click', function () {
+                $naviToggle.removeClass('active');
+            });
+        }
+    });
+
+    //Mobile Langs and Currency Toggles
+    $mobButtonsToggle.click(function (e) {
+
+        if ($(this).hasClass("loginMenu"))
+            window.location.href = window.location.protocol + '//' + window.location.host + "/" + window.location.pathname.split("/")[1] + "/_layouts/15/UMinho.Alumni.UI/pages/Login.aspx";
+
+        if ($(this).hasClass("gestorConteudos"))
+            window.location.href = window.location.protocol + '//' + window.location.host + "/" + window.location.pathname.split("/")[1] + "/_layouts/15/UMinho.Alumni.UI/pages/Provisioning.aspx";
+
+        if ($(this).parent().hasClass('active')) {
+            $(this).siblings('ul').removeClass('open');
+            $(this).parent().removeClass('active');
+            $mobButtonsToggle.removeClass('non-active');
+        } else {
+            $(this).parent().siblings('li').removeClass('active');
+            $(this).parent().siblings('li').find('ul').removeClass('open');
+            $(this).siblings('ul').toggleClass('open');
+            $mobButtonsToggle.addClass('non-active');
+            $(this).parent().toggleClass('active');
+        }
+        return false;
+    });
+
+    /*Quick Search Form Animation
+	*******************************************/
+    $searchBtn.click(function () {        
+        $('.quick-search').toggleClass('open');
+        //colocar focus no input
+        /*setTimeout(function () {
+            $('.quick-search input').focus();
+        }, 250);*/        
+    });
+    $('.topper, .page, .footer').click(function () {
+        $('.quick-search').removeClass('open');
+    });
+    $(window).on('resize', function () {
+        $('.quick-search').removeClass('open');
+    });
+
+
+    $searchBtnClose.click(function () {
+        $('.quick-search').toggleClass('open');
+    });
+
+    /*Mega Menu
+	*******************************************/
+    //Submenu Switching on Hover
+    $megaSubmLink.on('mouseenter', function () {
+        var $target = $(this).attr('data-target');
+        $(this).parent().parent().find('.has-submenu').removeClass('active');
+        $(this).parent().addClass('active');
+        $(this).parent().parent().parent().parent().find($megaSubmenu).removeClass('active');
+        $($target).addClass('active');
+    });
+
+    /*Harmonic Widget
+	*********************************************/
+    $harmonic.hover(function () {
+        $harmonic.addClass('collapsed');
+        $(this).removeClass('collapsed').addClass('expanded');
+    }, function () {
+        $harmonic.removeClass('collapsed').removeClass('expanded');
+    });
+
+    /*Share Bars Animation + Mail (Share Modal)
+	*********************************************/
+    $shareBar.hover(function () {
+        $shareBar.addClass('collapsed');
+        $(this).removeClass('collapsed').addClass('expanded');
+    }, function () {
+        $shareBar.removeClass('collapsed').removeClass('expanded');
+    });
+
+    /*Animated Digits Widget
+	************************************************************/
+    //Function
+    var countNumb = (function () {
+        var that = {};
+        that.init = function () {
+
+            $(".animated-digits .digit").each(function () {
+                var dataNumber = $(this).attr('data-number');
+
+                $(this).numerator({
+                    easing: 'swing', // easing options.
+                    duration: 2500, // the length of the animation.
+                    delimiter: '.',
+                    rounding: 0, // decimal places.
+                    toValue: dataNumber // animate to this value.
+                });
+            });
+        };
+
+        return that;
+
+    })();
+
+    //Initialisation
+    $('.digits').waypoint(function (direction) {
+        countNumb.init() + 'down';
+    }, {
+        offset: '65%',
+        triggerOnce: true
+    });
+
+    /*Countdown Widget
+	************************************************************/
+    // Under Construction Page Timer
+    if ($('#timer1').length > 0) {
+        $('#timer1').countdown('2014/12/20', function (event) {
+            $(this).html(event.strftime('%D : %H : %M : %S'));
+        });
+    }
+
+    // Event Timer
+    if ($('#timer2').length > 0) {
+        $('#timer2').countdown('2014/12/20', function (event) {
+            $(this).html(event.strftime('%D : %H : %M : %S'));
+        });
+    }
+
+    /*Date Picker Widget
+	************************************************************/
+    if ($('#datePicker').length > 0) {
+        $('#datePicker').datepicker().on('changeDate', function (e) {
+            $('#chosen_date').val(e.format('dd/mm/yyyy'))
+        });;
+        $('.datepicker .prev').html('<i class="fa fa-angle-left"></i>');
+        $('.datepicker .next').html('<i class="fa fa-angle-right"></i>');
+    }
+
+    /*Slide Up/Down Home Events
+	************************************************************/
+    $('#slide-up-toggle').click(function () {
+        $('.slide-up').toggleClass('open');
+    });
+
+    /*Dismissing / Closing Elements
+	************************************************************/
+    //Information Strip on top of header
+    $infoClose.click(function () {
+        var $target = $(this).parent().parent();
+        $target.fadeOut(300, function () {
+            $target.remove();
+            $.waypoints('refresh');
+        });
+    });
+
+    //Advertising Banner
+    $bannerClose.click(function () {
+        var $target = $(this).parent();
+        $target.fadeOut(300, function () {
+            $target.remove();
+        });
+    });
+
+    ///*Animated Percents Chart (Skills)
+    //************************************************************/
+    //var $barColor = $percentChart.data('bar-color');
+    //$percentChart.waypoint(function (direction) {
+    //    $percentChart.easyPieChart({
+    //        animate: 2000,
+    //        easing: 'easeOutBounce',
+    //        barColor: $barColor,
+    //        trackColor: '#e1e4e6',
+    //        scaleColor: '#797979',
+    //        size: 190,
+    //        lineWidth: 7,
+    //        onStep: function (from, to, percent) {
+    //            $(this.el).find('.percent').text(Math.round(percent));
+    //        }
+    //    }) + 'down';
+    //    //countNumb.init() + 'down';
+    //}, {
+    //    offset: '85%',
+    //    triggerOnce: true
+    //});
+
+    /*Thumbnail 3D Autoheight / Shopping Cart Column Autoheight
+	***********************************************************************/
+    $(window).load(function () {
+        $('.thumbnail-3d .overlay').height($('.thumbnail-3d img').height() + 2);
+    });
+    $(window).resize(function () {
+        $('.thumbnail-3d .overlay').height($('.thumbnail-3d img').height() + 2);
+    });
+
+    /*UI Slider
+	*******************************************/
+    var $minVal = parseInt($('.ui-slider').attr('data-min-val'));
+    var $maxVal = parseInt($('.ui-slider').attr('data-max-val'));
+    var $start = parseInt($('.ui-slider').attr('data-start'));
+    var $step = parseInt($('.ui-slider').attr('data-step'));
+
+    if ($('#ui-slider').length > 0) {
+        $('#ui-slider').noUiSlider({
+            start: [$start],
+            connect: "lower",
+            step: $step,
+            range: {
+                'min': $minVal,
+                'max': $maxVal
+            },
+            format: wNumb({
+                decimals: 0,
+                thousand: ' ',
+                postfix: ' $'
+            })
+        });
+        $("#ui-slider").Link('lower').to('-inline-<div class="tool-tip"></div>', function (value) {
+            // The tooltip HTML is 'this', so additional
+            // markup can be inserted here.
+            $(this).html(
+				'<span>' + value + '</span>'
+			);
+        });
+    }
+
+    /*Tooltips
+	*******************************************/
+    $tooltip.tooltip();
+
+    /*Light Gallery (Lightbox)
+	*******************************************/
+    $lightGallery.lightGallery({ caption: true });
+
+    ///////////////////////////////////////////////////////////////////////
+    /////////////////////////////  Shop Tools  ////////////////////////////
+    //////////////////////////////////////////////////////////////////////
+
+    /*Share Button
+	*******************************************/
+    $shareBtn.click(function (e) {
+        $(this).toggleClass('active');
+        $(this).parent().parent().parent().find('.share-opts').toggleClass('show');
+        $(this).parent().parent().parent().find('.description').toggleClass('hide');
+        e.preventDefault();
+    });
+
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////  Gallery Grids + Filtering  //////////////////////
+    //////////////////////////////////////////////////////////////////////
+
+    /*Massonry Gallery Grid
+	*******************************************/
+    // Stitching class
+    var $filter = $('.filters li a');
+    $filter.click(function () {
+        $filter.parent().removeClass('current');
+        $(this).parent().addClass('current');
+    });
+
+    // Initialize isotope
+    var $gallGridMassonry = $('.gallery-grid.masonry');
+    $gallGridMassonry.isotope({
+        itemSelector: '.item',
+        masonry: {
+            columnWidth: '.grid-sizer'
+        }
+    });
+
+    // filter items when filter link is clicked
+    $('.filters a').click(function () {
+        var selector = $(this).attr('data-filter');
+        $gallGridMassonry.isotope({
+            filter: selector
+        });
+        return false;
+    });
+
+
+    /*Adding Placeholder Support in Older Browsers
+	************************************************/
+    $('input, textarea').placeholder();
+
+
+    ///////////////////////////////////////////////////////////////////////
+    /////////////////// Sliders & Carousels  /////////////////////////////
+    //////////////////////////////////////////////////////////////////////
+
+    /*Fullscreen Hero Slider
+	************************************************/
+    var fs_slider = new MasterSlider();
+
+    fs_slider.control("arrows", { autohide: true });
+    fs_slider.setup("fs-slider", {
+        width: 1024,
+        height: 768,
+        centerControls: false,
+        layout: "fullscreen",
+        preload: 'all',
+        loop: true,
+        speed: 20,
+        autoplay: true
+    });
+
+
+    /*Partial View Slider
+	************************************************/
+    var partView = new MasterSlider();
+
+    partView.control('arrows');
+    partView.control('slideinfo', { insertTo: "#partial-view", autohide: false, align: 'bottom', size: 160 });
+    partView.control('circletimer', { color: "#FFFFFF", stroke: 9 });
+
+    partView.setup('slider01', {
+        width: 760,
+        height: 400,
+        space: 10,
+        loop: true,
+        view: 'partialWave',
+        layout: 'partialview'
+    });
+
+    /*Fullwidth Partial View Slider
+	************************************************/
+    var fsPartView = new MasterSlider();
+
+    fsPartView.control('arrows');
+    fsPartView.control('slideinfo', { insertTo: "#fs-partial-view-info", autohide: false, align: 'bottom', size: 160 });
+    fsPartView.control('circletimer', { color: "#FFFFFF", stroke: 9 });
+
+    fsPartView.setup('fs-partial-view', {
+        width: 760,
+        height: 400,
+        space: 10,
+        loop: true,
+        view: 'fadeFlow',
+        layout: 'partialview'
+    });
+
+    /*Display Slider
+	************************************************/
+    var slider = new MasterSlider();
+    slider.setup('masterslider', {
+        width: 507,
+        height: 286,
+        speed: 20,
+        preload: 0,
+        space: 2,
+        view: 'flow'
+    });
+    slider.control('arrows');
+    slider.control('bullets', { autohide: false });
+
+    /*Staff 3D Carousel
+	************************************************/
+    var staffCar = new MasterSlider();
+
+    staffCar.setup('slider02', {
+        loop: true,
+        width: 240,
+        height: 240,
+        speed: 20,
+        view: 'wave',
+        preload: 0,
+        space: 0
+    });
+    staffCar.control('arrows');
+    staffCar.control('slideinfo', { insertTo: '#staff-info' });
+
+    /*Product Showcase Slider
+	************************************************/
+    var slider = new MasterSlider();
+
+    slider.control('arrows');
+    slider.control('slideinfo', { insertTo: "#partial-view-1", autohide: false, align: 'bottom', size: 160 });
+    slider.control('circletimer', { color: "#FFFFFF", stroke: 9 });
+
+    slider.setup('showcase-slider', {
+        width: 760,
+        height: 400,
+        space: 10,
+        loop: true,
+        view: 'fadeWave',
+        layout: 'partialview'
+    });
+
+    /*Logos Carousel
+	************************************************/
+    var $autoplay = $logoCarousel.data('auto-play');
+    var $timeout = $logoCarousel.data('timeout');
+    $logoCarousel.owlCarousel({
+        loop: true,
+        dots: false,
+        nav: false,
+        autoplay: $autoplay,
+        autoplayTimeout: $timeout,
+        responsive: {
+            0: {
+                items: 2,
+            },
+            600: {
+                items: 3,
+            },
+            1000: {
+                items: 4,
+            }
+        }
+    });
+
+    /*Portfolio Single Slider
+	************************************************/
+    var portfolioSlider = new MasterSlider();
+    portfolioSlider.setup('portfolioSlider', {
+        width: 800,    // slider standard width
+        height: 840,   // slider standard height
+        space: 5,
+        view: "flow"
+        // more slider options goes here...
+        // check slider options section in documentation for more options.
+    });
+    // adds Arrows navigation control to the slider.
+    portfolioSlider.control('arrows');
+    portfolioSlider.control('bullets', { autohide: false });
+
+    /*Post Single Slider
+	************************************************/
+    var postSlider = new MasterSlider();
+    postSlider.setup('postSlider', {
+        width: 750,    // slider standard width
+        height: 480,   // slider standard height
+        space: 5,
+        layout: "fillwidth"
+    });
+    // adds Arrows navigation control to the slider.
+    postSlider.control('arrows');
+    postSlider.control('bullets', { autohide: false });
+
+    /*Single Product Slider
+	************************************************/
+    var spSlider = new MasterSlider();
+    spSlider.control('thumblist', { autohide: false, dir: 'h', arrows: false, align: 'bottom', width: 120, height: 130, margin: 5, space: 0 });
+    spSlider.setup('spSlider', {
+        width: 750,
+        height: 714,
+        space: 0,
+        view: 'scale'
+    });
+
+    /*Goods Package Carousel
+	************************************************/
+    if ($packageCarousel.length > 0) {
+        $packageCarousel.owlCarousel({
+            margin: 0,
+            loop: true,
+            items: 1,
+            nav: true,
+            navText: [
+				'<div class="arr01"></div><div class="arr02"></div>',
+				'<div class="arr03"></div><div class="arr04"></div>'
+            ]
+        });
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    /////////  INTERNAL ANCHOR LINKS SCROLLING (NAVIGATION)  //////////////
+    //////////////////////////////////////////////////////////////////////
+
+    $(".scroll").click(function (event) {
+        var $elemOffsetTop = $(this).data('offset-top');
+        $('html, body').animate({ scrollTop: $(this.hash).offset().top - $elemOffsetTop }, 1000, 'easeOutExpo');
+        $naviToggle.removeClass('active');
+        event.preventDefault();
+    });
+    $('.scrollup').click(function (e) {
+        e.preventDefault();
+        $('html, body').animate({ scrollTop: 0 }, { duration: 700, easing: 'easeOutExpo' });
+        $naviToggle.removeClass('active');
+    });
+
+
+    $(window).scroll(function () {
+        if ($(this).scrollTop() > 500) {
+            $('#scroll-top').addClass('visible');
+        } else {
+            $('#scroll-top').removeClass('visible');
+        }
+    });
+
+    //SCROLL-SPY
+    // Cache selectors
+    var lastId,
+		topMenu = $(".scroll-menu"),
+		topMenuHeight = topMenu.outerHeight(),
+		// All list items
+		menuItems = topMenu.find("a"),
+		// Anchors corresponding to menu items
+		scrollItems = menuItems.map(function () {
+		    var item = $($(this).attr("href"));
+		    if (item.length) { return item; }
+		});
+
+    // Bind to scroll
+    $(window).scroll(function () {
+        // Get container scroll position
+        var fromTop = $(this).scrollTop() + topMenuHeight + 200;
+
+        // Get id of current scroll item
+        var cur = scrollItems.map(function () {
+            if ($(this).offset().top < fromTop)
+                return this;
+        });
+        // Get the id of the current element
+        cur = cur[cur.length - 1];
+        var id = cur && cur.length ? cur[0].id : "";
+
+        if (lastId !== id) {
+            lastId = id;
+            // Set/remove active class
+            menuItems
+              .parent().removeClass("active")
+              .end().filter("[href=#" + id + "]").parent().addClass("active");
+        }
+    });
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////  Scroll to Sidebar Button  ////////////////////////
+    //////////////////////////////////////////////////////////////////////
+
+    $sidebarBtn.click(function (event) {
+        event.preventDefault();
+        $('html, body').animate({ scrollTop: $(this.hash).offset().top + 2 }, 800, 'easeOutExpo');
+    });
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////  Sticky Buttons  /////////////////////////////
+    //////////////////////////////////////////////////////////////////////
+
+    //Scroll to Top Button
+    $(window).scroll(function () {
+        if ($(this).scrollTop() > 500) {
+            $scrollTopBtn.parent().addClass('scrolled');
+        } else {
+            $scrollTopBtn.parent().removeClass('scrolled');
+        }
+    });
+    $scrollTopBtn.click(function () {
+        $('html, body').animate({ scrollTop: 0 }, { duration: 700, easing: 'easeOutExpo' });
+    });
+
+    //Quick Contact Form
+    $qcfBtn.click(function () {
+        $(this).parent().find('.quick-contact').toggleClass('visible');
+    });
+
+    //Hiding Contact Form On Clicking Out
+    $('.inner-wrap').click(function () {
+        $qcForm.removeClass('visible');
+    });
+
+});/*Document Ready End*//////////////////////////////////////////////////////////////////////////
+
+/*Back Function: Manipulating the browser history
+*************************************************/
+function goBack() {
+    window.history.back()
+}
+
+/*FIX MENU WIDTH*/
+jQuery(window).resize(function () {
+
+    $(".menu").attr("style", "margin-left:" + ($(".logo").width() + 20) + "px;" + "margin-right:" + ($(window).width() - $(".tools.group").position().left - $(".tools.group").width() - 20) + "px;");
+});
+
+(function () {
+   // $(".menu").attr("style", "margin-left:" + $(".logo").width() + "px;" + "margin-right:" + ($(window).width() - $(".tools.group").position().left - $(".tools.group").width()) + "px;");//
+})();
